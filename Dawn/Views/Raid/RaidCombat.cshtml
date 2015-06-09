@@ -1,0 +1,21 @@
+﻿@model Dusk.Dawn.Models.RaidCombatModel
+
+@{
+    ViewBag.Title = "Raid Combat";
+}
+
+@section featured {
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+
+    <h2>Raid Combat</h2>
+
+    <div id="raidcombat">
+        @Model.Name<br/>
+        @Model.Health<br/>
+        @Model.TimeRemaining<br/>
+        @Model.DamageDone<br/>
+    </div>
+}

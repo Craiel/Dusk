@@ -1,0 +1,63 @@
+﻿@using Dusk.Dawn.Logic
+@model Dusk.Dawn.Models.RaidListModel
+
+@{
+    ViewBag.Title = "RaidList";
+}
+
+@section featured {
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+
+    <div id="raidmenu">
+        <ul>
+            <li>@Html.ActionLink("Join", "ListNew", "Raid", new { title = "Join Raids" }, null)</li>
+            <li>@Html.ActionLink("Active", "ListActive", "Raid", new { title = "Active Raids" }, null)</li>
+            <li>@Html.ActionLink("Complete", "ListComplete", "Raid", new { title = "Complete Raids" }, null)</li>
+            <li>@Html.ActionLink("Start", "ListSpawn", "Raid", new { title = "Spawn new Raid" }, null)</li>
+        </ul>
+    </div>
+    
+    <h2>New Raids</h2>
+
+    <div id="newraids">
+        <table>
+            @foreach (var raid in Model.Raids)
+            {
+                var raidInfo = DawnLogic.GetRaidInfo(raid.RaidId);
+                TimeSpan? timeRemaining = null;
+                if (raidInfo.Duration != null)
+                {
+                    timeRemaining = (TimeSpan)raidInfo.Duration - (DateTime.Now - raid.SpawnTime);
+                }
+
+                if (timeRemaining == null || timeRemaining.Value < TimeSpan.Zero)
+                {
+                    timeRemaining = new TimeSpan();
+                }
+
+                <div>
+                    <span>(@raid.RaidInstanceId) @raidInfo.Name</span>
+                    <span>@raid.Damage / @raid.Health</span>
+                    <span>@timeRemaining.Value</span>
+                    @if (timeRemaining.Value > TimeSpan.Zero)
+                    {
+                        <form action="/Raid/Enter" method="POST">
+                            <input type="hidden" name="id" value="@raid.RaidInstanceId" />
+                            <p><input type="submit"/></p>
+                        </form>
+                    }
+                    else
+                    {
+                        <form action="/Raid/Loot" method="POST">
+                            <input type="hidden" name="id" value="@raid.RaidInstanceId" />
+                            <p><input type="submit"/></p>
+                        </form>
+                    }
+                </div>
+            }
+        </table>
+    </div>
+}

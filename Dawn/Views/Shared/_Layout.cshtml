@@ -1,0 +1,63 @@
+﻿@model Dusk.Dawn.Models.HomeModel
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - Dawn</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    @if (Model != null) {
+                        <p class="site-title">@Model.Name</p>
+                        <span>Level @Model.Level </span>
+                        <span>HP: @Model.HP / @Model.HPMax </span>
+                        <span>Leadership: @Model.Leadership / @Model.LeadershipMax </span>
+                        <span>Experience: @Model.Experience / @Model.ExperienceNeeded </span>
+                        <span>Gold: @Model.Experience / @Model.ExperienceNeeded </span>
+                    }
+                    else
+                    {
+                        <p class="site-title">Not logged in!</p>
+                    }
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Raid", "Raid", "Home")</li>
+                            <li>@Html.ActionLink("Party", "Party", "Home")</li>
+                            <li>@Html.ActionLink("Inventory", "Inventory", "Home")</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - Dawn</p>
+                </div>
+            </div>
+        </footer>
+
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

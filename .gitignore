@@ -1,0 +1,7 @@
+obj
+bin
+sql
+*.user
+*.suo
+*.DotSettings*
+*.Cache

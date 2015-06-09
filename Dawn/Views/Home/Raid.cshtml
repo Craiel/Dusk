@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Raid";
+}
+
+@section featured {
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+
+    <div id="raidmenu">
+        <ul>
+            <li>@Html.ActionLink("Join", "ListNew", "Raid", new { title = "Join Raids" }, null)</li>
+            <li>@Html.ActionLink("Active", "ListActive", "Raid", new { title = "Active Raids" }, null)</li>
+            <li>@Html.ActionLink("Complete", "ListComplete", "Raid", new { title = "Complete Raids" }, null)</li>
+            <li>@Html.ActionLink("Start", "ListSpawn", "Raid", new { title = "Spawn new Raid" }, null)</li>
+        </ul>
+    </div>
+}

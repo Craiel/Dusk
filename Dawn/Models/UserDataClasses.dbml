@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DawnDB" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(localdb)\Projects;Initial Catalog=DawnDB;Integrated Security=True;Connect Timeout=30" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DawnConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Experience" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Credits" Storage="_Gold" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Attack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Defense" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HP" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HPMax" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Leadership" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LeadershipMax" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ActiveEquipmentSetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NewUser" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="StatPoints" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="User_UserEnchantment" Member="UserEnchantments" ThisKey="Id" OtherKey="UserId" Type="UserEnchantment" />
+      <Association Name="User_UserEquipSet" Member="UserEquipSets" ThisKey="Id" OtherKey="UserId" Type="UserEquipSet" />
+      <Association Name="User_UserItem" Member="UserItems" ThisKey="Id" OtherKey="UserID" Type="UserItem" />
+      <Association Name="User_UserRaid" Member="UserRaids" ThisKey="Id" OtherKey="UserId" Type="UserRaid" />
+      <Association Name="UserEquipSet_User" Member="User_EquipSet" ThisKey="ActiveEquipmentSetId" OtherKey="Id" Type="UserEquipSet" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Enchantment" Member="UserEnchantments">
+    <Type Name="UserEnchantment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Attack" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Defense" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Perception" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserEnchantment_UserEnchantmentSpell" Member="UserEnchantmentSpells" ThisKey="Id" OtherKey="UserEnchantmentId" Type="UserEnchantmentSpell" />
+      <Association Name="User_UserEnchantment" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Enchantment_Spell" Member="UserEnchantmentSpells">
+    <Type Name="UserEnchantmentSpell">
+      <Column Name="UserEnchantmentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpellId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserEnchantment_UserEnchantmentSpell" Member="UserEnchantment" ThisKey="UserEnchantmentId" OtherKey="Id" Type="UserEnchantment" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_EquipSet" Member="UserEquipSets">
+    <Type Name="UserEquipSet">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="CanDelete" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="HelmetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ChestId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LegsId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BootsId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="HandsId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MainHandId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OffHandId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RingId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MountId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="UserEquipSet_User" Member="Users" ThisKey="Id" OtherKey="ActiveEquipmentSetId" Type="User" />
+      <Association Name="User_UserEquipSet" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Item" Member="UserItems">
+    <Type Name="UserItem">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Count" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="User_UserItem" Member="User" ThisKey="UserID" OtherKey="Id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Raid" Member="UserRaids">
+    <Type Name="UserRaid">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RaidInstanceId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="User_UserRaid" Member="User" ThisKey="UserId" OtherKey="Id" Type="User" IsForeignKey="true" />
+      <Association Name="UserRaidInstance_UserRaid" Member="UserRaidInstance" ThisKey="RaidInstanceId" OtherKey="Id" Type="UserRaidInstance" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Raid_Instance" Member="UserRaidInstances">
+    <Type Name="UserRaidInstance">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RaidId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TierId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SpawnTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Health" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Finished" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OwnerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserRaidInstance_UserRaid" Member="UserRaids" ThisKey="Id" OtherKey="RaidInstanceId" Type="UserRaid" />
+      <Association Name="UserRaidInstance_UserRaidInstanceSpell" Member="UserRaidInstanceSpell" ThisKey="Id" OtherKey="InstanceId" Type="UserRaidInstanceSpell" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.User_Raid_Instance_Spell" Member="UserRaidInstanceSpells">
+    <Type Name="UserRaidInstanceSpell">
+      <Column Name="InstanceId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SpellId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UserRaidInstance_UserRaidInstanceSpell" Member="UserRaidInstance" ThisKey="InstanceId" OtherKey="Id" Type="UserRaidInstance" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserRaidView" Member="UserRaidViews">
+    <Type Name="UserRaidView">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RaidInstanceId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="RaidId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TierId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Damage" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="Health" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SpawnTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Finished" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="[Public]" Member="Public" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="OwnerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
